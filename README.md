@@ -1,6 +1,6 @@
 # scaffold_public
 
-This repository/folder contains the **public** Docker image for the Scaffold monorepo. The image is built from `Dockerfile.public`, which installs the **Python 3.14** runtime and all production dependencies using **uv**. It does **not** contain any of your application source code – that is added later by the private image (`Dockerfile.private`).
+This repository/folder contains the **public** Docker image for the Scaffold monorepo. The image is built from `Dockerfile.public`, which installs the **Python 3.14** runtime and all production dependencies using **uv**. It does **not** contain any of your application source code.
 
 ## How it works
 
@@ -8,11 +8,9 @@ This repository/folder contains the **public** Docker image for the Scaffold mon
    ```
    ghcr.io/<owner>/my-public-image:latest
    ```
-   Replace `<owner>` with your GitHub account or organization name, or just let the workflow use `${{ github.repository_owner }}`.
+   Replace `<owner>` with your GitHub account or organization name, or let the workflow use `${{ github.repository_owner }}`.
 
 2. **Public image** – The image is published **publicly**, so anyone can pull it without authentication and without any data‑transfer quota.
-
-3. **Private image** – Your private repository can then use this public image as its base (see `Dockerfile.private`). This way the large dependency layers are cached in the public image and the private image only adds the minimal source code.
 
 ## Building locally (optional)
 
@@ -28,7 +26,7 @@ docker run --rm -it my-public-image:latest python --version
 
 ## Next steps
 
-- Ensure the `Dockerfile.public` (and optionally `Dockerfile.private`) are present in this folder. The provided `copy_dockerfiles.sh` script will copy them from the main monorepo.
+- Ensure the `Dockerfile.public` is present in this folder. The provided `copy_dockerfiles.sh` script will copy it from the main monorepo.
 - Add any additional OS packages you need in the `RUN apt-get install …` line of `Dockerfile.public`.
 - If you want to change the image name, edit the `tags:` line in the CI workflow.
 
