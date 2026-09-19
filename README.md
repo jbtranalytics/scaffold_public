@@ -6,7 +6,7 @@ This repository/folder contains the **public** Docker image for the Scaffold mon
 
 1. **CI workflow** – `.github/workflows/build-public.yml` automatically builds the image on every push to `main` (or when triggered manually) and pushes it to the GitHub Container Registry (GHCR) under the name:
    ```
-   ghcr.io/<owner>/my-public-image:latest
+   ghcr.io/<owner>/base-public:latest
    ```
    Replace `<owner>` with your GitHub account or organization name, or let the workflow use `${{ github.repository_owner }}`.
 
@@ -17,11 +17,11 @@ This repository/folder contains the **public** Docker image for the Scaffold mon
 If you want to build the image locally for testing, run:
 ```bash
 cd /home/josht/src/scaffold_public
-docker build -f Dockerfile.public -t my-public-image:latest .
+docker build -f Dockerfile.public -t base-public:latest .
 ```
 You can then run a container:
 ```bash
-docker run --rm -it my-public-image:latest python --version
+docker run --rm -it base-public:latest python --version
 ```
 
 ## Next steps
