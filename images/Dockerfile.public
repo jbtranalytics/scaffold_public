@@ -1,5 +1,6 @@
 # Dockerfile.public
 # Public base image containing all Python dependencies (via uv).
+# Dummy version bump - 2026-09-19
 # This image is intended to be published publicly (e.g. to ghcr.io) and can be used as the base for a private image that only adds your source code.
 
 # Dockerfile.public
