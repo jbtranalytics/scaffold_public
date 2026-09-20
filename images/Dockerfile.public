@@ -1,6 +1,6 @@
 # Dockerfile.public
 # NOTE: The private monorepo (scaffold) is the single source of truth for this file.
-# Always make modifications here in the private repo, then run `./scripts/copy_dockerfiles.sh` to sync updates to scaffold_public.
+# Always make modifications here in the private repo, then run `./scripts/sync_public.sh` to sync updates to scaffold_public.
 #
 # Public base image containing all Python dependencies (via uv) and Node.js 26.
 # This image is intended to be published publicly (e.g. to ghcr.io) and can be used as the base for a private image that only adds your source code.
@@ -29,9 +29,7 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv (the Python package manager)
-ENV UV_INSTALL_DIR=/usr/local
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    ln -s ${UV_INSTALL_DIR}/bin/uv /usr/local/bin/uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 
 WORKDIR /app
 
@@ -50,7 +48,7 @@ RUN npm ci --prefix apps/web
 COPY pyproject.toml uv.lock ./
 
 # Install production dependencies (no dev groups) in a fully locked, reproducible manner.
-RUN uv sync --no-dev --frozen
+RUN uv sync --no-dev --frozen --no-install-project
 
 # The resulting image contains a ready‑to‑use Python environment with all required packages.
 # It does NOT contain any of your application source code – that will be added in the private image.
