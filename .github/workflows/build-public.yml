@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - images/Dockerfile.public
+      - pyproject.toml
+      - uv.lock
+      - apps/web/package.json
   workflow_dispatch:
     # Allows manual triggering
 
