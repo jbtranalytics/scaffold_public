@@ -1,4 +1,7 @@
 # Dockerfile.public
+# NOTE: The private monorepo (scaffold) is the single source of truth for this file.
+# Always make modifications here in the private repo, then run `./scripts/copy_dockerfiles.sh` to sync updates to scaffold_public.
+#
 # Public base image containing all Python dependencies (via uv) and Node.js 26.
 # This image is intended to be published publicly (e.g. to ghcr.io) and can be used as the base for a private image that only adds your source code.
 
