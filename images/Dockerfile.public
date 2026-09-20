@@ -17,6 +17,7 @@ RUN apt-get update && \
         libffi-dev \
         libssl-dev \
         ca-certificates \
+        curl \
         gnupg \
         git \
         openssh-client \
