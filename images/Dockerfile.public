@@ -16,8 +16,13 @@ RUN apt-get update && \
         gcc \
         libffi-dev \
         libssl-dev \
-        ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
+        ca-certificates \
+        gnupg \
+        git \
+        openssh-client \
+        postgresql-client libpq-dev \
+        libsodium-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install uv (the Python package manager)
 ENV UV_INSTALL_DIR=/usr/local
