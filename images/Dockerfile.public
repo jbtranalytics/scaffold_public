@@ -1,15 +1,10 @@
 # Dockerfile.public
-# Public base image containing all Python dependencies (via uv).
-# Dummy version bump - 2026-09-19
-# This image is intended to be published publicly (e.g. to ghcr.io) and can be used as the base for a private image that only adds your source code.
-
-# Dockerfile.public
 # Public base image containing all Python dependencies (via uv) and Node.js 26.
 # This image is intended to be published publicly (e.g. to ghcr.io) and can be used as the base for a private image that only adds your source code.
 
 FROM python:3.14-slim AS base
 
-# Install OS build tools required by many Python wheels (adjust as needed).
+# Install OS build tools and runtime dependencies required by the Scaffold monorepo (Python & Node)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
@@ -19,10 +14,15 @@ RUN apt-get update && \
         ca-certificates \
         curl \
         gnupg \
+        # Version control tools – needed for git‑based Python deps
         git \
         openssh-client \
+        # PostgreSQL client libraries (runtime for psycopg) and dev headers for building wheels
         postgresql-client libpq-dev \
+        # Sodium library for argon2‑cffi
         libsodium-dev \
+    && curl -fsSL https://deb.nodesource.com/setup_26.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv (the Python package manager)
